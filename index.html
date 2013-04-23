@@ -6,37 +6,9 @@
 		<meta charset="UTF-8">
 
 		<title>Pong</title>
-
-		<style>
-			body {
-				font-family: sans-serif;
-				margin: 0;
-				height: 100%;
-				text-align: center;
-				width: 100%;
-			}
-			#game {
-				margin-top: 100px;
-			}
-
-			.scoreboard {
-				position: fixed;
-				top: 10px; left: 20%;
-				width: 800px;
-			}
-			.challenger { float: left; }
-			.opponent { float: right; }
-			.gameover {
-				background: #000;
-				color: #fff;
-				display: none;
-				height: 100px;
-				margin-left: -200px;
-				position: fixed;
-				top: 40%; left: 50%;
-				width: 400px;
-			}
-		</style>
+	
+		<link href='http://fonts.googleapis.com/css?family=Geo' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 
 	</head>
 
@@ -54,173 +26,14 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 		<script src="jquery.hotkeys.js"></script>
 		<script src="jquery.hotkeys.keystatus.js"></script>
+		<script src="assets/js/game.js"></script>
 		<script>
 
 			/* todo
-				- Move css/js into assets folder
-				- Add Y velocity
 				- Comment code
 				- Keep player bats inside canvas
 				- Convert to coffee-script
 			*/
-			$(function(){
-
-				var canvas = $('#game'),
-					context = canvas.get(0).getContext('2d'),
-					canvasWidth = canvas.width(),
-					canvasHeight = canvas.height(),
-					fps = 30;
-
-				var player = {
-					x: 20,
-					y: 180,
-					height: 100,
-					width: 10,
-					score: 0,
-					draw: function() {
-
-						context.fillStyle = "#fff";
-						context.fillRect(this.x, this.y, this.width, this.height);
-				
-					}
-				}
-
-				var opponent = {
-					x: 780,
-					y: 180,
-					height: 100,
-					width: 10,
-					score: 0,
-					draw: function() {
-
-						context.fillStyle = "#fff",
-						context.fillRect(this.x, this.y, this.width, this.height);
-					
-					}
-				}
-
-				var ball = {
-					x: 390,
-					y: 240,
-					height: 10,
-					width: 10,
-					velocityX: -8,
-					velocityY: 0,
-					draw: function() {
-
-						context.fillStyle = "#fff";
-						context.fillRect(this.x, this.y, this.width, this.height);
-					
-					},
-					reset: function() {
-
-						this.x = 390;
-						this.y = 240;
-						this.velocityY = 0;
-
-					}
-				}
-
-				function draw() {
-
-					context.fillStyle = "#000";
-					context.fillRect(0, 0, canvasWidth, canvasHeight);
-
-					ball.draw();
-					player.draw();
-					opponent.draw();
-
-				}
-
-				function collides(a, b) {
-
-					return a.x < b.x + b.width &&
-						   a.x + a.width > b.x &&
-						   a.y < b.y + b.height &&
-						   a.y + a.height > b.y;
-
-				}
-
-				function handleInput() {
-
-					if(keydown.up) {
-						opponent.y -= 10;
-					}
-
-					if(keydown.down) {
-						opponent.y += 10;
-					}
-
-					if(keydown.w) {
-						player.y -= 10;
-					}
-					if(keydown.s) {
-						player.y += 10;
-					}
-
-				}
-
-				function update() {
-
-					// Player scores a point
-					if((ball.x + ball.width) > canvasWidth) {
-						console.log('player 1 wins');
-						player.score ++;
-						ball.reset();
-					}
-
-					// Opponent scores a point
-					if(ball.x < 0) {
-						console.log('player 2 wins');
-						opponent.score ++;
-						ball.reset();
-					}
-
-					// Update scoreboard
-					$('.challenger').html(player.score);
-					$('.opponent').html(opponent.score);
-
-					if (player.score == 10 || opponent.score == 10) {
-						$('.gameover').show();
-						return;
-					}
-
-					// Player strikes ball
-					if(collides(ball, player)) {
-
-						ball.velocityX = -8;
-						ball.velocityY = 3;
-
-					}
-
-					// Opponent Strikes ball
-					if(collides(ball, opponent)) {
-
-						ball.velocityX = 8;
-						ball.velocityY = 3;
-
-					}
-
-					// Stop ball going out of canvas view
-					if(ball.y < 0) ball.velocityY = -3;
-					if((ball.y + ball.height) > canvasHeight) ball.velocityY = 3;
-
-					// Moving the ball
-					ball.x -= ball.velocityX;
-					ball.y -= ball.velocityY;
-
-					handleInput();
-
-				}
-
-				var gameloop = setInterval(function() {
-
-					update();
-					draw();
-
-				}, 1000/fps);
-
-			});
 		</script>
 
 	</body>

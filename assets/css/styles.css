@@ -1,0 +1,39 @@
+@import url(http://fonts.googleapis.com/css?family=VT323);
+
+body {
+	background: black;
+	font-family: 'Geo', sans-serif;
+	margin: 0;
+	height: 100%;
+	text-align: center;
+	width: 100%;
+}
+#game {
+	border: 20px solid white;
+	margin-top: 100px;
+}
+
+.scoreboard {
+	color: white;
+	position: fixed;
+	top: 130px; left: 20%;
+	width: 800px;
+}
+.challenger, .opponent {
+	display: inline-block;
+	font-size: 60pt;
+	margin: 15px;
+}
+.challenger {  }
+.opponent {  }
+.gameover {
+	background: black;
+	color: white;
+	display: none;
+	font-size: 40pt;
+	height: 100px;
+	margin-left: -200px;
+	position: fixed;
+	top: 20%; left: 50%;
+	width: 400px;
+}
